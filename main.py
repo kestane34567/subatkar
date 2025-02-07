@@ -76,6 +76,9 @@ probability_snow_holiday_with_governor = {
     year: (probability_snow_holiday_final * governor_resign_probability[year]) / 100 for year in governor_resign_probability
 }
 
+# Tüm yıllar için okulun tatil olma olasılığının ortalaması
+average_probability_snow_holiday_with_governor = np.mean(list(probability_snow_holiday_with_governor.values()))
+
 # Grafik çizimi
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 12))
 
@@ -105,6 +108,7 @@ ax1.text(0.02, 0.80, f'Bu Kar Yağışında Tatil Olasılığı: {probability_sn
 
 # Valinin görev süresinin sona erme olasılığı ve okulun tatil olma olasılığı grafiği
 ax2.plot(governor_resign_probability.keys(), [probability_snow_holiday_with_governor[year] for year in governor_resign_probability], label='Okulun Tatil Olma Olasılığı (Vali Görev Süresi Sona Erme ile)', marker='o', color='green')
+ax2.axhline(average_probability_snow_holiday_with_governor, color='red', linestyle='--', label=f'Tüm Yıllar Ortalaması: {average_probability_snow_holiday_with_governor:.2f}%')
 ax2.set_xlabel('Yıl')
 ax2.set_ylabel('Olasılık (%)')
 ax2.set_title('Okulun Tatil Olma Olasılığı (Valinin Görev Süresi Sona Erme Olasılığı ile)')
@@ -120,6 +124,7 @@ print(f"Kar yağdığında okulun tatil olma olasılığı: {probability_holiday
 print(f"Herhangi bir Şubat gününde okulun tatil olma olasılığı: {probability_any_holiday:.2f}%")
 print(f"Şubat aylarının tatil olmuş olma olasılığı: {probability_snow_holiday:.2f}%")
 print(f"Bu kar yağışında okulun tatil olma olasılığı: {probability_snow_holiday_final:.2f}%")
+print(f"Tüm yıllar için okulun tatil olma olasılığı ortalaması (Vali Görev Süresi Sona Erme ile): {average_probability_snow_holiday_with_governor:.2f}%")
 
 for year in governor_resign_probability:
     print(f"{year} yılı için:")
